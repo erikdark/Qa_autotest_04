@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device=width, initial-scale=1.0">
   <title>Регистрация</title>
   <style>
     body {
@@ -79,7 +79,7 @@
     </div>
     <div class="form-group">
       <label for="phone">Телефон:</label>
-      <input type="tel" id="phone" name="phone" placeholder="Введите ваш телефон">
+      <input type="tel" id="phone" name="phone" placeholder="Введите ваш телефон" maxlength="10" required>
     </div>
     <div class="form-group">
       <label for="address">Адрес:</label>
@@ -114,7 +114,7 @@
     }
 
     function validatePhone(phone) {
-      return /^\d{1,12}$/.test(phone);
+      return /^\d{10}$/.test(phone);
     }
 
     registrationForm.addEventListener('submit', (event) => {
@@ -141,7 +141,7 @@
       }
 
       if (!validatePhone(phone)) {
-        alert("Пожалуйста, введите корректный телефон (только цифры, до 12 символов).");
+        alert("Пожалуйста, введите корректный телефон (10 цифр).");
         return;
       }
 
@@ -152,6 +152,20 @@
       closeButton.addEventListener('click', () => {
         modal.style.display = "none";
       });
+    });
+
+    phoneInput.addEventListener('input', (event) => {
+      let value = phoneInput.value.replace(/\D/g, '');
+      if (value.length > 10) {
+        value = value.slice(0, 10);
+      }
+      phoneInput.value = value;
+    });
+
+    phoneInput.addEventListener('blur', (event) => {
+      if (phoneInput.value.length === 10) {
+        phoneInput.value = '+7' + phoneInput.value;
+      }
     });
   </script>
 </body>
